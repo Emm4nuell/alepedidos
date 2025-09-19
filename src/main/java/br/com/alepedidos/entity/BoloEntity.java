@@ -1,7 +1,6 @@
 package br.com.alepedidos.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -10,11 +9,22 @@ import java.util.UUID;
 @Table(name = "tb_bolo")
 @Data
 public class BoloEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+    @Column(name = "topper")
     private String topper;
+    @Column(name = "tamanho")
     private String tamanho;
+    @Column(name = "preco")
     private BigDecimal preco;
+    @Column(name = "modelo")
     private String modelo;
+    @Column(name = "sabor")
     private String sabor;
-    private String imagem;
+    @Column(name = "image_url")
+    private String imagemUrl;
+    @ManyToOne
+    @JoinColumn(name = "id_pedido")
+    private PedidoEntity pedido;
 }

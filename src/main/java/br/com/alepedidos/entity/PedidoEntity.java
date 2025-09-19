@@ -1,10 +1,10 @@
 package br.com.alepedidos.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -13,20 +13,37 @@ import java.util.UUID;
 @Table(name = "tb_pedido")
 @Data
 public class PedidoEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+    @Column(name = "codigo")
     private Long codigo;
+    @Column(name = "nome")
     private String nome;
+    @Column(name = "telefone")
     private String telefone;
-    private Date data_pedido;
-    private boolean realizado_pagamento;
+    @Column(name = "data_pedido")
+    private LocalDate dataPedido;
+    @Column(name = "realizado_pagamento")
+    private boolean realizadoPagamento;
+    @Column(name = "email")
     private String email;
+    @Column(name = "cpf")
     private String cpf;
-    private Date data_retirada;
-    private List<SalgadoEntity> salgados;
-    private List<DocinhoEntity> docinho;
-    private List<BoloEntity> bolos;
+    @Column(name = "data_retirada")
+    private LocalDate dataRetirada;
+    @Column(name = "qrcode")
     private String qrcode;
+    @Column(name = "desconto")
     private double desconto;
-    private BigDecimal preco_total;
-    private BigDecimal preco_total_desconto;
+    @Column(name = "preco_total")
+    private BigDecimal precoTotal;
+    @Column(name = "preco_total_desconto")
+    private BigDecimal precoTotalDesconto;
+    @OneToMany(mappedBy = "pedido",fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+    private List<SalgadoEntity> salgados;
+    @OneToMany(mappedBy = "pedido", fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+    private List<DocinhoEntity> docinho;
+    @OneToMany(mappedBy = "pedido", fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+    private List<BoloEntity> bolos;
 }
