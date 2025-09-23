@@ -1,0 +1,25 @@
+package br.com.alepedidos.infrastructure.components;
+
+import br.com.alepedidos.domain.model.User;
+import br.com.alepedidos.infrastructure.repository.UserRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+@Service
+@AllArgsConstructor
+public class UserDetailService implements UserDetailsService {
+
+    private final UserRepository userRepository;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        var user = userRepository.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário ou senha incorreto."));
+        return new User(user.getEmail(),
+                user.getPassword(),
+                user.getRoles());
+    }
+}

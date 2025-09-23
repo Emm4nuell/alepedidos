@@ -1,4 +1,4 @@
-package br.com.alepedidos.entity;
+package br.com.alepedidos.domain.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -8,7 +8,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "tb_bolo")
 @Data
-public class BoloEntity {
+public class BoloModel {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -26,5 +26,5 @@ public class BoloEntity {
     private String imagemUrl;
     @ManyToOne
     @JoinColumn(name = "id_pedido")
-    private PedidoEntity pedido;
+    private PedidoModel pedido;
 }

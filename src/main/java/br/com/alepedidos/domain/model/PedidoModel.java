@@ -1,18 +1,17 @@
-package br.com.alepedidos.entity;
+package br.com.alepedidos.domain.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Table(name = "tb_pedido")
 @Data
-public class PedidoEntity {
+public class PedidoModel extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -41,9 +40,9 @@ public class PedidoEntity {
     @Column(name = "preco_total_desconto")
     private BigDecimal precoTotalDesconto;
     @OneToMany(mappedBy = "pedido",fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
-    private List<SalgadoEntity> salgados;
+    private List<SalgadoModel> salgados;
     @OneToMany(mappedBy = "pedido", fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
-    private List<DocinhoEntity> docinho;
+    private List<DocinhoModel> docinho;
     @OneToMany(mappedBy = "pedido", fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
-    private List<BoloEntity> bolos;
+    private List<BoloModel> bolos;
 }

@@ -1,15 +1,19 @@
-CREATE TABLE tb_pedido (
+CREATE TABLE tb_order (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    codigo BIGINT,
-    nome VARCHAR(255) NOT NULL,
-    telefone VARCHAR(20),
-    data_pedido DATE NOT NULL,
-    realizado_pagamento BOOLEAN NOT NULL,
+    code BIGINT,
+    name VARCHAR(255) NOT NULL,
+    phone VARCHAR(20),
+    order_date DATE NOT NULL,
+    payment_completed BOOLEAN NOT NULL,
     email VARCHAR(255),
     cpf VARCHAR(14) UNIQUE,
-    data_retirada DATE,
-    qrcode VARCHAR(255),
-    desconto NUMERIC(10,2) DEFAULT 0,
-    preco_total NUMERIC(19,2) NOT NULL,
-    preco_total_desconto NUMERIC(19,2)
+    pickup_date DATE,
+    qr_code VARCHAR(255),
+    discount NUMERIC(10,2) DEFAULT 0,
+    total_price NUMERIC(19,2) NOT NULL,
+    discounted_price NUMERIC(19,2),
+    created_by_user VARCHAR(255),
+    created_date TIMESTAMP,
+    last_modified_by_user VARCHAR(255),
+    last_modified_date TIMESTAMP
 );
