@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,6 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @AllArgsConstructor
+@EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
 public class SpringSecurityConfig {
 
     private final SpringSecurityFilterCustom filterCustom;
@@ -27,8 +29,10 @@ public class SpringSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http,
             AuthProviderCustom authProviderCustom) throws Exception {
         return http.csrf(csfr -> csfr.disable())
-                .authorizeHttpRequests(authorize -> authorize.requestMatchers("/api/ale/signin")
-                        .permitAll()
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/api/user/signin").permitAll()
+                        .requestMatchers("/api/user/create-user").permitAll()
+                        .requestMatchers("/api/category/**").permitAll()
                         .anyRequest()
                         .authenticated())
                 .addFilterBefore(filterCustom,

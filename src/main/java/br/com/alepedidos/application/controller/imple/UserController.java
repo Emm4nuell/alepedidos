@@ -1,4 +1,4 @@
-package br.com.alepedidos.application.controller.usuario;
+package br.com.alepedidos.application.controller.imple;
 
 import br.com.alepedidos.application.controller.IUserController;
 import br.com.alepedidos.application.request.user.UserRequest;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/ale")
+@RequestMapping("/api/user")
 @AllArgsConstructor
 public class UserController implements IUserController {
 
@@ -27,7 +27,7 @@ public class UserController implements IUserController {
         Authentication authenticationRequest = UsernamePasswordAuthenticationToken.unauthenticated(request.email(), request.password());
         Authentication authenticationResponse = this.authenticationManager.authenticate(authenticationRequest);
         var token = tokenService.generateToken(authenticationResponse.getName());
-        return ResponseEntity.ok().body("Bearer " + token);
+        return ResponseEntity.ok().body(token);
     }
 
     @Override

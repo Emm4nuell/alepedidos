@@ -1,24 +1,25 @@
 package br.com.alepedidos.domain.model;
 
+import br.com.alepedidos.domain.enuns.RoleEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
 public class User implements UserDetails {
     private String email;
     private String password;
-    private List<RoleModel> roles;
+    private Set<RoleEnum> roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream()
-                .map(role -> (GrantedAuthority) () -> "ROLE_" + role)
+                .map(role -> (GrantedAuthority) () -> "ROLE_" + role.getName())
                 .toList();
     }
 
